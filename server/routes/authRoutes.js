@@ -25,6 +25,13 @@ router.post(
   login
 );
 
+// Simple GET handler so visiting /api/auth/login in a browser is clearer
+router.get('/login', (req, res) => {
+  res.json({
+    message: 'Login endpoint. Use POST with { email, password } in JSON body.',
+  });
+});
+
 router.get('/me', protect, getMe);
 
 export default router;

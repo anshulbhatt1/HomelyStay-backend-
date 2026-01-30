@@ -56,6 +56,19 @@ const propertySchema = new Schema(
       ref: 'User',
       required: true,
     },
+    // Array of booked date ranges so hosts can see availability quickly
+    bookedDates: [
+      {
+        from: {
+          type: Date,
+          required: true,
+        },
+        to: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

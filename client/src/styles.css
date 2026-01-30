@@ -271,11 +271,229 @@ a {
   margin-top: 2.5rem;
 }
 
+/* Admin panel */
+.admin-subnav {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.admin-subnav a {
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.admin-subnav a:hover {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-subnav a.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.admin-dashboard h1,
+.admin-page h1 {
+  margin-bottom: 0.25rem;
+}
+
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.admin-stat-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.1);
+}
+
+.admin-stat-card-revenue {
+  background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+  border: 1px solid #bfdbfe;
+}
+
+.admin-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.admin-stat-label {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.admin-section {
+  margin-top: 2.5rem;
+}
+
+.admin-section h2 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: #334155;
+}
+
+.admin-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 480px;
+}
+
+.admin-chart-bar-wrap {
+  display: grid;
+  grid-template-columns: 80px 1fr 90px;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-chart-bar {
+  height: 28px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  border-radius: 0.5rem;
+  min-width: 4px;
+}
+
+.admin-chart-label {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.admin-chart-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.admin-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-page-header h1 {
+  margin: 0;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+}
+
+.admin-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-cell-title {
+  font-weight: 500;
+  max-width: 200px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.admin-badge-role {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.admin-badge-confirmed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.admin-badge-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.admin-select {
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+}
+
+.admin-btn-danger:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+  }
+
+  .admin-subnav {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
   }
 
   .main {
@@ -288,6 +506,17 @@ a {
 
   .property-details {
     grid-template-columns: 1fr;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .admin-chart-bar-wrap {
+    grid-template-columns: 70px 1fr 70px;
+    gap: 0.5rem;
   }
 }
 

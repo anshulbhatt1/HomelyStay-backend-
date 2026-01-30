@@ -54,7 +54,13 @@ export const createBooking = async (req, res) => {
       checkOut: { $gt: checkInDate },
     });
 
-    if (conflictingBooking) {
+    const conflictingBlockedRange = (property.bookedDates || []).some((range) => {
+      const from = new Date(range.from);
+      const to = new Date(range.to);
+      return from < checkOutDate && to > checkInDate;
+    });
+
+    if (conflictingBooking || conflictingBlockedRange) {
       return res
         .status(400)
         .json({ message: 'Property is already booked for the selected dates' });
@@ -70,6 +76,11 @@ export const createBooking = async (req, res) => {
       checkOut: checkOutDate,
       totalPrice,
     });
+
+    // Block the dates on the property for quick availability lookups
+    property.bookedDates = property.bookedDates || [];
+    property.bookedDates.push({ from: checkInDate, to: checkOutDate });
+    await property.save();
 
     const populated = await booking.populate('property').populate('user', 'name email');
 
@@ -131,6 +142,22 @@ export const cancelBooking = async (req, res) => {
 
     booking.status = 'cancelled';
     await booking.save();
+
+    // Free the blocked dates on the property (if present)
+    if (booking.property && Array.isArray(booking.property.bookedDates)) {
+      const checkInTime = booking.checkIn.getTime();
+      const checkOutTime = booking.checkOut.getTime();
+
+      booking.property.bookedDates = booking.property.bookedDates.filter((range) => {
+        const fromTime = new Date(range.from).getTime();
+        const toTime = new Date(range.to).getTime();
+
+        // Keep ranges that don't exactly match this booking
+        return !(fromTime === checkInTime && toTime === checkOutTime);
+      });
+
+      await booking.property.save();
+    }
 
     res.json(booking);
   } catch (error) {

@@ -39,7 +39,9 @@ export const AuthProvider = ({ children }) => {
     axios
       .get('/auth/me')
       .then((res) => {
-        setUser(res.data);
+        const userData = res.data?.user;
+        if (userData) setUser(userData);
+        else localStorage.removeItem('homelystay_token');
       })
       .catch(() => {
         localStorage.removeItem('homelystay_token');
@@ -50,6 +52,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const res = await axios.post('/auth/login', { email, password });
     const { token, user: userData } = res.data;
+    if (!token || !userData) throw new Error('Invalid login response');
     localStorage.setItem('homelystay_token', token);
     setUser(userData);
     return userData;
@@ -58,6 +61,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (payload) => {
     const res = await axios.post('/auth/register', payload);
     const { token, user: userData } = res.data;
+    if (!token || !userData) throw new Error('Invalid register response');
     localStorage.setItem('homelystay_token', token);
     setUser(userData);
     return userData;
@@ -76,6 +80,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     isAuthenticated: !!user,
     isHost: user?.role === 'host',
+    isAdmin: user?.role === 'admin',
+    isUser: user?.role === 'user',
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
