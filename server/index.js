@@ -1,16 +1,8 @@
 import dotenv from "dotenv";
 import path from "path";
-import { fileURLToPath } from "url";
 
-// Resolve __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load environment variables:
-// - Root-level `.env` (project config, e.g. MONGO_URI / PORT)
-// - Server-level `.env` (JWT, overrides root values if duplicated)
-dotenv.config({ path: path.join(__dirname, "..", ".env") });
-dotenv.config({ path: path.join(__dirname, ".env") });
+// Load environment variables from project root (where npm run dev is executed)
+dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 import express from "express";
 import morgan from "morgan";
